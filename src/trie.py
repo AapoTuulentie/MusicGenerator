@@ -51,11 +51,10 @@ if __name__ == "__main__":
     parser = MidiParser(filename)
     data = parser.parse_notes()
     data2 = [49, 47, 49, 46, 51, 51, 50, 50, 48, 48, 52, 52, 41, 41, 49, 49, 48, 48]
-    t = Trie(4)
-    t.create_trie(data2)
+    t = Trie(3)
+    t.create_trie(data)
     print(t)
-    random_sequence = t.generate_random_sequence()
-    print("Random Sequence:", random_sequence)
+    print(t.generate_random_sequence())
 
 
 
