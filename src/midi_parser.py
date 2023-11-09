@@ -37,5 +37,5 @@ if __name__ == "__main__":
     notes = parser.parse_notes()
     durations = parser.parse_durations()
     data2 = [43, 46, 46, 39, 39, 51, 51, 61, 61, 51, 51, 60, 60, 51, 51, 58, 58, 51, 51, 56, 56, 51, 51, 55, 55, 51, 51, 56, 56, 55, 55]
-    print(notes)
+
     print(durations)

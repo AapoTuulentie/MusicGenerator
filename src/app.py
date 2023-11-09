@@ -1,4 +1,3 @@
-import tkinter
 from midi_parser import MidiParser
 from trie import * 
 
