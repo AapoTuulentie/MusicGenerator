@@ -1,5 +1,4 @@
 from midi_parser import MidiParser
-import random
 
 class Node:
     def __init__(self):
@@ -24,19 +23,6 @@ class Trie:
                 node.counter += 1
             node.leaf = True
 
-# Function for testing purposes
-    def generate_random_sequence(self):
-        root = self.root
-        sequence = []
-        for _ in range(self.degree):
-            children = list(root.children.keys())
-            if root.leaf == True:
-                break 
-            random_child = random.choice(children)
-            sequence.append(random_child)
-            root = root.children[random_child]
-        return sequence
-    
     def __str__(self):
         return self.display(self.root, 0)
 
@@ -56,7 +42,6 @@ if __name__ == "__main__":
     t = Trie(2)
     t.create_trie(data2)
     print(t)
-    print(t.generate_random_sequence())
 
 
 
