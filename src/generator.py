@@ -4,11 +4,9 @@ import random
 import mido
 
 class Generator:
-    def __init__(self, trie):
+    def __init__(self, trie, parser):
         self.trie = trie
-        self.velocity = 100
-        self.ticks_per_beat = 200
-        self.tempo = 100
+        self.parser = parser
         self.track = []
 
     def generate_initial_sequence(self):
@@ -54,13 +52,13 @@ class Generator:
         self.generate_new_sequence(sequence)
 
     def create_midi_file(self, filename="generatedtrack.mid"):
-        midi_file = mido.MidiFile(ticks_per_beat=self.ticks_per_beat)
+        midi_file = mido.MidiFile(ticks_per_beat=self.parser.ticks_per_beat)
         track = mido.MidiTrack()
         midi_file.tracks.append(track)
         track.append(mido.Message('program_change', program=104))
-        for note in self.track:
+        for note, duration in zip(self.track, self.parser.durations):
             on_message = mido.Message('note_on', note=note, velocity=100, time=0)
-            off_message = mido.Message('note_off', note=note, velocity=100, time=60) 
+            off_message = mido.Message('note_off', note=note, velocity=100, time=duration) 
             track.append(on_message)
             track.append(off_message)
 
@@ -70,13 +68,12 @@ class Generator:
 if __name__ == "__main__":
     filename = '/home/aapotuul/MusicGenerator/Midi/aatbak.mid'
     filename2 = '/home/aapotuul/MusicGenerator/Midi/bach_(trio)-sonatas_525_(c)harfesoft.mid'
-    parser = MidiParser(filename)
+    filename3 = '/home/aapotuul/MusicGenerator/Midi/ty_november.mid'
+    parser = MidiParser(filename3)
     data = parser.parse_notes()
     durations = parser.parse_durations()
-    data2 = [49, 49, 49, 46, 51, 51, 50, 50, 48, 48, 52, 52, 40, 40, 39, 40, 40, 50]
-    data3 = [49, 49, 50, 49, 49, 51]
     t = Trie(3)
-    x = Generator(t)
+    x = Generator(t, parser)
 
     t.create_trie(data)
     print(t)
