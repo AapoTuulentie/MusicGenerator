@@ -4,3 +4,5 @@
 [Weekly Report 1](https://github.com/AapoTuulentie/MusicGenerator/blob/main/Documentation/Weekly_report1.md)
 
 [Weekly Report 2](https://github.com/AapoTuulentie/MusicGenerator/blob/main/Documentation/Weekly_report2.md)
+
+[Weekly Report 3](https://github.com/AapoTuulentie/MusicGenerator/blob/main/Documentation/Weekly_report3.md)
