@@ -3,7 +3,8 @@ from trie import Trie
 from generator import Generator
 
 def main():
-    parser = MidiParser()
+    filename = '/home/aapotuul/MusicGenerator/Midi/aatbak.mid'
+    parser = MidiParser(filename)
     trie = Trie(3)
     generator = Generator(trie, parser)
 

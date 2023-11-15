@@ -36,7 +36,7 @@ class Generator:
 
         for note in sequence:
             if note not in current.children:
-                return self.track
+                continue
             current = current.children[note]
 
         next_notes = list(current.children.keys())
@@ -71,6 +71,7 @@ if __name__ == "__main__":
     filename3 = '/home/aapotuul/MusicGenerator/Midi/ty_november.mid'
     parser = MidiParser(filename3)
     data = parser.parse_notes()
+    data2 = [1,2,3,4,4,5,5,3,2,2,3,1,2,3,4,3,2,5,3,2]
     durations = parser.parse_durations()
     t = Trie(3)
     x = Generator(t, parser)

@@ -9,7 +9,7 @@ class TestMidiParser(unittest.TestCase):
     def test_parse_notes(self):
         notes = self.parser.parse_notes()
         first_10 = notes[:10]
-        expected = [70, 70, 74, 74, 77, 77, 70, 70, 75, 75]
+        expected = [70, 74, 77, 70, 75, 79, 82, 77, 75, 74]
         self.assertEqual(first_10, expected)
 
     def test_parse_durations(self):

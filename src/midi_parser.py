@@ -1,4 +1,5 @@
 import mido
+import os
 
 class MidiParser:
     def __init__(self, filename):
@@ -37,12 +38,12 @@ if __name__ == "__main__":
     filename = '/home/aapotuul/MusicGenerator/Midi/bach_(trio)-sonatas_525_(c)harfesoft.mid'
     filename2 = '/home/aapotuul/MusicGenerator/Midi/aatbak.mid'
     filename3 = '/home/aapotuul/MusicGenerator/Midi/ty_november.mid'
-    parser = MidiParser(filename3)
+    parser = MidiParser(filename)
     notes = parser.parse_notes()
     durations = parser.parse_durations()
     data2 = [43, 46, 46, 39, 39, 51, 51, 61, 61, 51, 51, 60, 60, 51, 51, 58, 58, 51, 51, 56, 56, 51, 51, 55, 55, 51, 51, 56, 56, 55, 55]
 
-    print(durations)
+    print(notes)
     print(len(notes))
     print(len(durations))
     print(sum([70, 26, 70, 26, 142, 50, 70, 26, 70, 26, 238]))
