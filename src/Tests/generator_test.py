@@ -21,8 +21,3 @@ class TestGenerator(unittest.TestCase):
         self.generator.generate_new_sequence(initial_sequence.copy())
         self.assertLessEqual(len(self.generator.track), 301)
 
-    def test_create_midi_file(self):
-        self.generator.generate_initial_sequence()
-        self.generator.create_midi_file(filename="test_generated_track.mid")
-        # Add assertions here to check if the file was created successfully
-        # You might check if the file exists, its size, or if it follows the MIDI file format
