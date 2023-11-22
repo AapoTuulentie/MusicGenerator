@@ -1,12 +1,14 @@
 import mido
-import os
 
 class MidiParser:
-    def __init__(self, filename):
-        self.filename = filename
+    def __init__(self):
+        self.filename = None
         self.durations = []
         self.ticks_per_beat = None
         
+    def set_file(self, file):
+        self.filename = file
+
     def parse_notes(self):
         file = mido.MidiFile(self.filename)
         self.ticks_per_beat = file.ticks_per_beat
@@ -35,15 +37,8 @@ class MidiParser:
 
 
 if __name__ == "__main__":
+    parser = MidiParser()
     filename = '/home/aapotuul/MusicGenerator/Midi/bach_(trio)-sonatas_525_(c)harfesoft.mid'
-    filename2 = '/home/aapotuul/MusicGenerator/Midi/aatbak.mid'
-    filename3 = '/home/aapotuul/MusicGenerator/Midi/ty_november.mid'
-    parser = MidiParser(filename)
-    notes = parser.parse_notes()
+    parser.set_file(filename)
     durations = parser.parse_durations()
-    data2 = [43, 46, 46, 39, 39, 51, 51, 61, 61, 51, 51, 60, 60, 51, 51, 58, 58, 51, 51, 56, 56, 51, 51, 55, 55, 51, 51, 56, 56, 55, 55]
-
-    print(notes)
-    print(len(notes))
-    print(len(durations))
-    print(sum([70, 26, 70, 26, 142, 50, 70, 26, 70, 26, 238]))
+    print(durations)

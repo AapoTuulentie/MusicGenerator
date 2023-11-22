@@ -20,4 +20,3 @@ class TestGenerator(unittest.TestCase):
         initial_sequence = self.generator.generate_initial_sequence()
         self.generator.generate_new_sequence(initial_sequence.copy())
         self.assertLessEqual(len(self.generator.track), 301)
-

@@ -12,6 +12,11 @@ class TestMidiParser(unittest.TestCase):
         expected = [70, 74, 77, 70, 75, 79, 82, 77, 75, 74]
         self.assertEqual(first_10, expected)
 
+    def test_notes_amount_correct(self):
+        notes = self.parser.parse_notes()
+        amount = len(notes)
+        self.assertEqual(amount, 4487)
+
     def test_parse_durations(self):
         durations = self.parser.parse_durations()
         first_10 = durations[:10]

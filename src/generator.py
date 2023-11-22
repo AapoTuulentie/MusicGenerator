@@ -4,10 +4,29 @@ import random
 import mido
 
 class Generator:
-    def __init__(self, trie, parser):
-        self.trie = trie
-        self.parser = parser
+    def __init__(self):
+        self.trie = None
+        self.parser = None
         self.track = []
+
+    def set_trie(self, trie):
+        self.trie = trie
+
+    def set_parser(self, parser):
+        self.parser = parser
+
+    def generate(self, degree, midi_file, duration_mode):
+        self.trie.set_degree(degree)
+        self.parser.set_file(midi_file)
+
+        data = self.parser.parse_notes()
+        self.parser.parse_durations()
+
+        self.trie.create_trie(data)
+
+        initial_sequence = self.generate_initial_sequence()
+        self.generate_new_sequence(initial_sequence)
+        self.create_midi_file(duration_mode, filename="generatedtrack.mid")
 
     def generate_initial_sequence(self):
         initial_sequence = []
@@ -51,36 +70,24 @@ class Generator:
 
         self.generate_new_sequence(sequence)
 
-    def create_midi_file(self, filename="generatedtrack.mid"):
+    def create_midi_file(self, duration_mode, filename="generatedtrack.mid"):
         midi_file = mido.MidiFile(ticks_per_beat=self.parser.ticks_per_beat)
         track = mido.MidiTrack()
         midi_file.tracks.append(track)
         track.append(mido.Message('program_change', program=104))
-        for note, duration in zip(self.track, self.parser.durations):
-            on_message = mido.Message('note_on', note=note, velocity=100, time=0)
-            off_message = mido.Message('note_off', note=note, velocity=100, time=duration) 
-            track.append(on_message)
-            track.append(off_message)
+
+        if duration_mode == "Same duration for every note":
+            for note in self.track:
+                on_message = mido.Message('note_on', note=note, velocity=100, time=0)
+                off_message = mido.Message('note_off', note=note, velocity=100, time=150) 
+                track.append(on_message)
+                track.append(off_message)
+
+        if duration_mode == "Same durations as in source MIDI file":
+            for note, duration in zip(self.track, self.parser.durations):
+                on_message = mido.Message('note_on', note=note, velocity=100, time=0)
+                off_message = mido.Message('note_off', note=note, velocity=100, time=duration) 
+                track.append(on_message)
+                track.append(off_message)
 
         midi_file.save(filename)
-
-    
-if __name__ == "__main__":
-    filename = '/home/aapotuul/MusicGenerator/Midi/aatbak.mid'
-    filename2 = '/home/aapotuul/MusicGenerator/Midi/bach_(trio)-sonatas_525_(c)harfesoft.mid'
-    filename3 = '/home/aapotuul/MusicGenerator/Midi/ty_november.mid'
-    parser = MidiParser(filename3)
-    data = parser.parse_notes()
-    data2 = [1,2,3,4,4,5,5,3,2,2,3,1,2,3,4,3,2,5,3,2]
-    durations = parser.parse_durations()
-    t = Trie(3)
-    x = Generator(t, parser)
-
-    t.create_trie(data)
-    print(t)
-
-    f = x.generate_initial_sequence()
-    x.generate_new_sequence(f)
-    print(x.track)
-    x.create_midi_file(filename="generatedtrack.mid")
-    print(len(x.track))

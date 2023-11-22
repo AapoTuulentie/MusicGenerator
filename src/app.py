@@ -1,13 +1,8 @@
-from midi_parser import MidiParser
-from trie import Trie
-from generator import Generator
+from ui import Ui
 
 def main():
-    filename = '/home/aapotuul/MusicGenerator/Midi/aatbak.mid'
-    parser = MidiParser(filename)
-    trie = Trie(3)
-    generator = Generator(trie, parser)
-
+    ui = Ui()
+    ui.run()
 
 if __name__ == "__main__":
     main()

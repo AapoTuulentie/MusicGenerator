@@ -5,8 +5,11 @@ class Node:
         self.counter = 0
 
 class Trie:
-    def __init__(self, degree):
+    def __init__(self):
         self.root = Node()
+        self.degree = None
+
+    def set_degree(self, degree):
         self.degree = degree
 
     def create_trie(self, data):
@@ -30,8 +33,6 @@ class Trie:
             result += "  " * level + f"Note: {note}, Counter: {child_node.counter}, Leaf: {child_node.leaf}\n"
             result += self.display(child_node, level + 1)
         return result
-    
-
 
 
     

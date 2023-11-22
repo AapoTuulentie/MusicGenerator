@@ -6,16 +6,24 @@ from midi_parser import MidiParser
 from trie import Trie
 
 class Ui:
-    def __init__(self, trie, parser, generator):
-        self.trie = trie
-        self.parser = parser
-        self.generator = generator
+    def __init__(self):
         self.root = tk.Tk() 
         self.root.title("MusicGenerator") 
         self.root.geometry("800x600")
         self.menu_frame = None
         self.generation_frame = None
+        self.trie = None
+        self.parser = None
+        self.generator = None
+
+    def create_initial_components(self):
+        self.trie = Trie()
+        self.parser = MidiParser()
+        self.generator = Generator()
+
+    def run(self):
         self.menu()
+        self.root.mainloop()
 
     def menu(self):
         self.menu_frame = tk.Frame(self.root, padx=20, pady=20)
@@ -33,10 +41,10 @@ class Ui:
         self.generation_frame = tk.Frame(self.root, padx=20, pady=20)
         self.generation_frame.pack(expand=True)
 
-        degree_label = tk.Label(self.generation_frame, text="Select Degree\n(length of a sequence the generation is based on)", font=("Courier", 12))
+        degree_label = tk.Label(self.generation_frame, text="Select Degree\n(length of a sequence)", font=("Courier", 12))
         degree_label.pack(pady=10)
 
-        degree_values = [str(i) for i in range(1, 10)]
+        degree_values = [str(i) for i in range(2, 10)]
         degree_var = tk.StringVar()
         degree_dropdown = ttk.Combobox(self.generation_frame, textvariable=degree_var, values=degree_values, width=10)
         degree_dropdown.pack(pady=10)
@@ -62,14 +70,15 @@ class Ui:
         duration_dropdown.pack(pady=10)
         duration_dropdown.set(duration_modes[0])
 
-        generate_button = tk.Button(self.generation_frame, text="Generate Music", font=("Courier", 12), command=self.generate_music)
+        generate_button = tk.Button(self.generation_frame, text="Generate Music", font=("Courier", 16), command=lambda: self.generate_music(degree_var.get(), midi_var.get(), duration_var.get()))
         generate_button.pack(pady=20)
 
-if __name__ == "__main__":
-    filename = '/home/aapotuul/MusicGenerator/Midi/ty_november.mid'
-    trie = Trie(3)
-    parser = MidiParser(filename)
-    generator = Generator(trie, parser)
-
-    ui = Ui(trie, parser, generator)
-    ui.root.mainloop()
+    def generate_music(self, degree, midi_file, duration_mode):
+        degree = int(degree)
+        midi_folder_path = 'src/Midi'
+        midi_file_path = os.path.join(midi_folder_path, midi_file)
+        self.create_initial_components()
+        self.generator.set_trie(self.trie)
+        self.generator.set_parser(self.parser)
+        
+        self.generator.generate(degree, midi_file_path, duration_mode)
