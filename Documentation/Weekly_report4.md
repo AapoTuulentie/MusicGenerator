@@ -7,4 +7,6 @@
 - Testing is updated and coverage is in the [testing document](https://github.com/AapoTuulentie/MusicGenerator/blob/main/Documentation/Testing_document.md). It is still lacking.
 - Did not look into pylint yet
 
-Next I will have to improve testing and apply pylint. Player for the generated track would also be nice in UI.  
+Next I will have to improve testing, comment the code and apply pylint.
+
+Time used: 9h
