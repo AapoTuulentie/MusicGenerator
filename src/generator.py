@@ -1,7 +1,6 @@
-from trie import Trie
-from midi_parser import MidiParser
 import random
 import mido
+import os
 
 class Generator:
     def __init__(self):
@@ -15,7 +14,7 @@ class Generator:
     def set_parser(self, parser):
         self.parser = parser
 
-    def generate(self, degree, midi_file, duration_mode):
+    def generate(self, degree, midi_file, duration_mode, instrument):
         self.trie.set_degree(degree)
         self.parser.set_file(midi_file)
 
@@ -26,7 +25,7 @@ class Generator:
 
         initial_sequence = self.generate_initial_sequence()
         self.generate_new_sequence(initial_sequence)
-        self.create_midi_file(duration_mode, filename="generatedtrack.mid")
+        self.create_midi_file(duration_mode, instrument)
 
     def generate_initial_sequence(self):
         initial_sequence = []
@@ -70,11 +69,19 @@ class Generator:
 
         self.generate_new_sequence(sequence)
 
-    def create_midi_file(self, duration_mode, filename="generatedtrack.mid"):
+    def create_midi_file(self, duration_mode, instrument, filename="generatedtrack.mid", dir="src/GeneratedTracks"):
         midi_file = mido.MidiFile(ticks_per_beat=self.parser.ticks_per_beat)
         track = mido.MidiTrack()
         midi_file.tracks.append(track)
-        track.append(mido.Message('program_change', program=104))
+        instrument_dict = {
+            "Piano": 0,
+            "Acoustic Guitar": 24,
+            "Bagpipe": 109,
+            "Saxophone": 65,
+            "Bird Tweet": 123
+        }
+        program_number = instrument_dict.get(instrument)
+        track.append(mido.Message('program_change', program=program_number))
 
         if duration_mode == "Same duration for every note":
             for note in self.track:
@@ -90,4 +97,4 @@ class Generator:
                 track.append(on_message)
                 track.append(off_message)
 
-        midi_file.save(filename)
+        midi_file.save(os.path.join(dir, filename))

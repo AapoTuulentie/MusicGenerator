@@ -4,7 +4,8 @@ from midi_parser import MidiParser
 class TestMidiParser(unittest.TestCase):
     def setUp(self):
         testfile = 'src/Tests/Testfiles/bach_(trio)-sonatas_525_(c)harfesoft.mid'
-        self.parser = MidiParser(testfile)
+        self.parser = MidiParser()
+        self.parser.set_file(testfile)
 
     def test_parse_notes(self):
         notes = self.parser.parse_notes()

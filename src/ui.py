@@ -6,6 +6,16 @@ from midi_parser import MidiParser
 from trie import Trie
 
 class Ui:
+    """Class that creates an user interface for the application.
+    Attributes:
+        root: tkinter root
+        menu_frame: frame for the menu
+        generation_frame: frame for the generation page
+        trie: class trie that is set in different function
+        parser: class parser that is set in different function
+        generator: class generator that is set in different function
+    """
+
     def __init__(self):
         self.root = tk.Tk() 
         self.root.title("MusicGenerator") 
@@ -17,15 +27,20 @@ class Ui:
         self.generator = None
 
     def create_initial_components(self):
+        """Creates new objects for trie, parser and generator everytime a new file is generated"""
+
         self.trie = Trie()
         self.parser = MidiParser()
         self.generator = Generator()
 
     def run(self):
+        """Runs UI loop"""
         self.menu()
         self.root.mainloop()
 
     def menu(self):
+        """Creates menu that opens when the app is ran"""
+
         self.menu_frame = tk.Frame(self.root, padx=20, pady=20)
         self.menu_frame.pack(expand=True)
 
@@ -37,6 +52,8 @@ class Ui:
         start_button.pack()
 
     def generation_page(self):
+        """Generation page where user can choose generation settings"""
+
         self.menu_frame.destroy()
         self.generation_frame = tk.Frame(self.root, padx=20, pady=20)
         self.generation_frame.pack(expand=True)
@@ -70,10 +87,27 @@ class Ui:
         duration_dropdown.pack(pady=10)
         duration_dropdown.set(duration_modes[0])
 
-        generate_button = tk.Button(self.generation_frame, text="Generate Music", font=("Courier", 16), command=lambda: self.generate_music(degree_var.get(), midi_var.get(), duration_var.get()))
+        instrument_label = tk.Label(self.generation_frame, text="Select Instrument", font=("Courier", 12))
+        instrument_label.pack(pady=10)
+
+        instruments = ["Piano", "Acoustic Guitar", "Bagpipe", "Saxophone", "Bird Tweet"]
+        instrument_var = tk.StringVar()
+        instrument_dropdown = ttk.Combobox(self.generation_frame, textvariable=instrument_var, values=instruments, width=40)
+        instrument_dropdown.pack(pady=10)
+        instrument_dropdown.set(instruments[0])
+
+        generate_button = tk.Button(self.generation_frame, text="Generate Music", font=("Courier", 16), command=lambda: self.generate_music(degree_var.get(), midi_var.get(), duration_var.get(), instrument_var.get()))
         generate_button.pack(pady=20)
 
-    def generate_music(self, degree, midi_file, duration_mode):
+    def generate_music(self, degree, midi_file, duration_mode, instrument):
+        """Function that passes user input values to generators generate-function
+        Args:
+            degree: length of a sequence in generation
+            midi_file: midi file to use as training data
+            duration_mode: determines how the length of notes is generated
+            instrument: which instrument is used in the generated track
+        """
+
         degree = int(degree)
         midi_folder_path = 'src/Midi'
         midi_file_path = os.path.join(midi_folder_path, midi_file)
@@ -81,4 +115,4 @@ class Ui:
         self.generator.set_trie(self.trie)
         self.generator.set_parser(self.parser)
         
-        self.generator.generate(degree, midi_file_path, duration_mode)
+        self.generator.generate(degree, midi_file_path, duration_mode, instrument)

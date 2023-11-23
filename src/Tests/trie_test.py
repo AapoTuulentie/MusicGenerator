@@ -3,7 +3,8 @@ from trie import Trie
 
 class TestTrie(unittest.TestCase):
     def setUp(self):
-        self.trie = Trie(3)
+        self.trie = Trie()
+        self.trie.set_degree(3)
 
     def test_root_has_children(self):
         data = [70, 74, 77, 70, 75, 79, 82, 77]
