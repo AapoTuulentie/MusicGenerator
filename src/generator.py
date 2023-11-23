@@ -75,6 +75,7 @@ class Generator:
         midi_file.tracks.append(track)
         instrument_dict = {
             "Piano": 0,
+            "Violin": 40,
             "Acoustic Guitar": 24,
             "Bagpipe": 109,
             "Saxophone": 65,
@@ -92,6 +93,13 @@ class Generator:
 
         if duration_mode == "Same durations as in source MIDI file":
             for note, duration in zip(self.track, self.parser.durations):
+                on_message = mido.Message('note_on', note=note, velocity=100, time=0)
+                off_message = mido.Message('note_off', note=note, velocity=100, time=duration) 
+                track.append(on_message)
+                track.append(off_message)
+
+        if duration_mode == "Randomized durations based on bars in source MIDI file":
+            for note, duration in zip(self.track, self.parser.randomized_durations):
                 on_message = mido.Message('note_on', note=note, velocity=100, time=0)
                 off_message = mido.Message('note_off', note=note, velocity=100, time=duration) 
                 track.append(on_message)

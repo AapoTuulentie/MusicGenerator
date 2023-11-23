@@ -73,7 +73,7 @@ class Ui:
         midi_folder_path = 'src/Midi'
         midi_files = [file for file in os.listdir(midi_folder_path) if file.endswith('.mid')]
         midi_var = tk.StringVar()
-        midi_dropdown = ttk.Combobox(self.generation_frame, textvariable=midi_var, values=midi_files, width=40)
+        midi_dropdown = ttk.Combobox(self.generation_frame, textvariable=midi_var, values=midi_files, width=45)
         midi_dropdown.pack(pady=10)
         if midi_files:
             midi_dropdown.set(midi_files[0])
@@ -81,18 +81,18 @@ class Ui:
         duration_label = tk.Label(self.generation_frame, text="Select Note Duration Mode", font=("Courier", 12))
         duration_label.pack(pady=10)
 
-        duration_modes = ["Same duration for every note", "Same durations as in source MIDI file"]
+        duration_modes = ["Same duration for every note", "Same durations as in source MIDI file", "Randomized durations based on bars in source MIDI file"]
         duration_var = tk.StringVar()
-        duration_dropdown = ttk.Combobox(self.generation_frame, textvariable=duration_var, values=duration_modes, width=40)
+        duration_dropdown = ttk.Combobox(self.generation_frame, textvariable=duration_var, values=duration_modes, width=45)
         duration_dropdown.pack(pady=10)
         duration_dropdown.set(duration_modes[0])
 
         instrument_label = tk.Label(self.generation_frame, text="Select Instrument", font=("Courier", 12))
         instrument_label.pack(pady=10)
 
-        instruments = ["Piano", "Acoustic Guitar", "Bagpipe", "Saxophone", "Bird Tweet"]
+        instruments = ["Piano", "Violin", "Acoustic Guitar", "Bagpipe", "Saxophone", "Bird Tweet"]
         instrument_var = tk.StringVar()
-        instrument_dropdown = ttk.Combobox(self.generation_frame, textvariable=instrument_var, values=instruments, width=40)
+        instrument_dropdown = ttk.Combobox(self.generation_frame, textvariable=instrument_var, values=instruments, width=20)
         instrument_dropdown.pack(pady=10)
         instrument_dropdown.set(instruments[0])
 
