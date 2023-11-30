@@ -3,18 +3,43 @@ import mido
 import os
 
 class Generator:
+    """Class that generates the new music track.
+    Attributes:
+        trie: trie data structure class
+        parser: midi parser class
+        track: full note sequence for the generated track
+    """
+
     def __init__(self):
         self.trie = None
         self.parser = None
         self.track = []
 
     def set_trie(self, trie):
+        """Sets trie for music generation.
+        Args:
+            trie: trie data structure class
+        """
+
         self.trie = trie
 
     def set_parser(self, parser):
+        """Sets parser for music generation.
+        Args:
+            parser: midi parser class
+        """
+
         self.parser = parser
 
     def generate(self, degree, midi_file, duration_mode, instrument):
+        """Function that combines all the necessary steps for generating music.
+        Args:
+            degree: degree for generation chosen by the user
+            midi_file: training data for generation chosen by the user
+            duration_mode: mode for note durations chosen by the user
+            instrument: instrument for the generated track chosen by the user
+        """
+
         self.trie.set_degree(degree)
         self.parser.set_file(midi_file)
 
@@ -28,6 +53,11 @@ class Generator:
         self.create_midi_file(duration_mode, instrument)
 
     def generate_initial_sequence(self):
+        """Creates the first sequence of notes.
+        Returns:
+            initial_sequence: first notes (length of the degree)
+        """
+
         initial_sequence = []
         degree = self.trie.degree
         current = self.trie.root
@@ -46,6 +76,11 @@ class Generator:
         return initial_sequence
     
     def generate_new_sequence(self, sequence):
+        """Generates the rest of the track.
+        Args:
+            sequence: the sequence to base the next note on
+        """
+
         if len(self.track) > 300:
             return self.track
         
@@ -70,6 +105,14 @@ class Generator:
         self.generate_new_sequence(sequence)
 
     def create_midi_file(self, duration_mode, instrument, filename="generatedtrack.mid", dir="src/GeneratedTracks"):
+        """Creates the midi file for generated track.
+        Args:
+            duration_mode: mode for note durations
+            instrument: instrument for the generated music
+            filename: name for the generated track
+            dir: path for the generated track
+        """
+        
         midi_file = mido.MidiFile(ticks_per_beat=self.parser.ticks_per_beat)
         track = mido.MidiTrack()
         midi_file.tracks.append(track)

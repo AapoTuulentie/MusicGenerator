@@ -26,9 +26,28 @@ class TestGenerator(unittest.TestCase):
     def test_generate_new_sequence(self):
         initial_sequence = self.generator.generate_initial_sequence()
         self.generator.generate_new_sequence(initial_sequence.copy())
-        self.assertLessEqual(len(self.generator.track), 301)
+        self.assertEqual(len(self.generator.track), 301)
 
-    def test_create_midi_file(self):
+    def test_sequences_exist_in_training_data(self):
+        initial_sequence = self.generator.generate_initial_sequence()
+        self.generator.generate_new_sequence(initial_sequence.copy())
+        root = self.trie.root
+        sequences_exist = True
+
+        for i in range(len(self.generator.track) - self.trie.degree + 1):
+            seq = self.generator.track[i:i + self.trie.degree]
+            current = root
+            for note in seq:
+                if note not in current.children:
+                    sequences_exist = False
+                    break
+                current = current.children[note]
+            if not sequences_exist:
+                break
+
+        self.assertTrue(sequences_exist)
+
+    def test_created_file_exists(self):
         initial_sequence = self.generator.generate_initial_sequence()
         self.generator.generate_new_sequence(initial_sequence.copy())
         duration_mode = "Same duration for every note"

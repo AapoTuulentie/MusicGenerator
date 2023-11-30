@@ -2,6 +2,14 @@ import mido
 import random
 
 class MidiParser:
+    """Class that parses the training data.
+    Attributes:
+        filename: training data file
+        durations: parsed note durations from midi
+        randomized_durations: randomized parsed note duration sequences that are the length of a bar
+        ticks_per_beat: number of ticks in each quarter note in the training data
+    """
+
     def __init__(self):
         self.filename = None
         self.durations = []
@@ -9,9 +17,19 @@ class MidiParser:
         self.ticks_per_beat = None
         
     def set_file(self, file):
+        """Sets the training data file.
+        Args:
+            file: midi file chosen by the user
+        """
+
         self.filename = file
 
     def parse_notes(self):
+        """Parses notes from the tracks of the training data and returns them as a list.
+        Returns:
+            notes: parsed notes
+        """
+
         file = mido.MidiFile(self.filename)
         self.ticks_per_beat = file.ticks_per_beat
         notes = []
@@ -27,6 +45,8 @@ class MidiParser:
         return notes
 
     def parse_durations(self):
+        """Parses durations from training data and adds them to self.durations. Also creates self.randomized_durations"""
+        
         file = mido.MidiFile(self.filename)
         patterns = []
         beats_per_bar = 4
@@ -37,7 +57,7 @@ class MidiParser:
             for msg in track:
                 if msg.type == 'note_on':
                     duration = msg.time
-                    if duration == 0 or duration > 2000:
+                    if duration < 20 or duration > 2000:
                         continue
                     self.durations.append(duration)
                     bar.append(duration)
@@ -52,10 +72,11 @@ class MidiParser:
                 self.randomized_durations.append(duration)
     
 
-
 if __name__ == "__main__":
     parser = MidiParser()
     filename = '/home/aapotuul/MusicGenerator/src/Midi/bach_(trio)-sonatas_525_(c)harfesoft.mid'
+    filename2 = '/home/aapotuul/MusicGenerator/src/Midi/aatbak.mid'
+    filename3 = '/home/aapotuul/MusicGenerator/src/Midi/ty_november.mid'
     parser.set_file(filename)
     parser.parse_notes()
     durations = parser.parse_durations()

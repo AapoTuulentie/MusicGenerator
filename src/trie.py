@@ -36,37 +36,70 @@ class Trie:
             data: a list of parsed midi data from midi parser
         """
 
-        root = self.root
         for i in range(len(data) - self.degree+1):
-            n_sequence = data[i:i+self.degree]
-            node = root
-            for n in n_sequence:
-                if n not in node.children:
-                    node.children[n] = Node()
-                node = node.children[n]
-                node.counter += 1
-            node.leaf = True
+            sequence = data[i:i+self.degree]
+            self.add_sequence_to_trie(sequence)
 
-    def __str__(self):
-        """Returns the trie in a readable form"""
-
-        return self.display(self.root, 0)
-
-    def display(self, node, level):
-        """Creates a display of the trie structure.
+    def add_sequence_to_trie(self, sequence):
+        """Adds a single sequence to the trie
         Args:
-            node: root node
-            level: determines node placement in display based on how far it is from root
+            sequence: single sequence of notes to be added to the trie
         """
 
-        result = ""
+        node = self.root
+        for n in sequence:
+            if n not in node.children:
+                node.children[n] = Node()
+            node = node.children[n]
+            node.counter += 1
+        node.leaf = True
+
+    def get_sequences_starting_from_note(self, start_note):
+        """Returns all sequences starting from the given note.
+        Args:
+            start_note: the note from which the sequences start
+        Returns:
+            sequences: list of sequences that start from the given note
+        """
+
+        sequences = []
+        display_result = self.display()
+
+        for sequence, counter in display_result:
+            if sequence[0] == start_note:
+                sequences.append((sequence, counter))
+        return sequences
+
+    def display(self, node=None):
+        """Returns a list of tuples where each tuple includes (sequence as a list, counter).
+        Args:
+            node: root node (default is None, starts from the root of the trie)
+        Returns:
+            trie: the whole trie as a list of tuples
+        """
+        
+        if node is None:
+            node = self.root
+        trie = []
+
         for note, child_node in node.children.items():
-            result += "  " * level + f"Note: {note}, Counter: {child_node.counter}, Leaf: {child_node.leaf}\n"
-            result += self.display(child_node, level + 1)
-        return result
+            if child_node.leaf:
+                sequence = [note]
+                trie.append((sequence, child_node.counter))
+            else:
+                sub_sequences = self.display(child_node)
+                for sub_sequence, counter in sub_sequences:
+                    trie.append(([note] + sub_sequence, counter))
+        return trie
 
 
-    
+if __name__ == "__main__":
+    trie = Trie()
+    trie.set_degree(1)
+    data = [1, 3, 2, 1, 4, 3, 2, 1, 3, 4, 3, 2, 4]
+    trie.create_trie(data)
+    print(trie.display())
+    print(trie.get_sequences_starting_from_note(1))
 
 
 
