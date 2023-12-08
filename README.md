@@ -1,9 +1,15 @@
 # MusicGenerator
-[Design Document](https://github.com/AapoTuulentie/MusicGenerator/blob/main/Documentation/Design_document.md)
+MusicGenerator is a project for Data Structures and Algorithms-course. It generates music using MIDI training data and a Markov chain.
 
-[Testing Document](https://github.com/AapoTuulentie/MusicGenerator/blob/main/Documentation/Testing_document.md)
+### Documentation
 
-[Implementation Document](https://github.com/AapoTuulentie/MusicGenerator/blob/main/Documentation/Implementation_document.md)
+####[Design Document](https://github.com/AapoTuulentie/MusicGenerator/blob/main/Documentation/Design_document.md)
+
+####[Testing Document](https://github.com/AapoTuulentie/MusicGenerator/blob/main/Documentation/Testing_document.md)
+
+####[Implementation Document](https://github.com/AapoTuulentie/MusicGenerator/blob/main/Documentation/Implementation_document.md)
+
+### Weekly Reports
 
 [Weekly Report 1](https://github.com/AapoTuulentie/MusicGenerator/blob/main/Documentation/Weekly_report1.md)
 
