@@ -20,3 +20,5 @@ MusicGenerator is a project for Data Structures and Algorithms-course. It genera
 ###### [Weekly Report 4](https://github.com/AapoTuulentie/MusicGenerator/blob/main/Documentation/Weekly_report4.md)
 
 ###### [Weekly Report 5](https://github.com/AapoTuulentie/MusicGenerator/blob/main/Documentation/Weekly_report5.md)
+
+###### [Weekly Report 6](https://github.com/AapoTuulentie/MusicGenerator/blob/main/Documentation/Weekly_report6.md)

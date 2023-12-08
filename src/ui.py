@@ -135,3 +135,8 @@ class Ui:
         self.generator.set_parser(self.parser)
 
         self.generator.generate(degree, midi_file_path, duration_mode, instrument)
+
+        confirmation_label = tk.Label(self.generation_frame, text="Music generated successfully!",
+                                      font=("Courier", 12), fg="green")
+        confirmation_label.pack(pady=10)
+        self.generation_frame.after(3000, confirmation_label.destroy)

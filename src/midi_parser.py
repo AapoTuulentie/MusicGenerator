@@ -78,7 +78,7 @@ if __name__ == "__main__":
     filename = '/home/aapotuul/MusicGenerator/src/Midi/bach_(trio)-sonatas_525_(c)harfesoft.mid'
     filename2 = '/home/aapotuul/MusicGenerator/src/Midi/aatbak.mid'
     filename3 = '/home/aapotuul/MusicGenerator/src/Midi/ty_november.mid'
-    parser.set_file(filename)
+    parser.set_file(filename3)
     parser.parse_notes()
     durations = parser.parse_durations()
 
