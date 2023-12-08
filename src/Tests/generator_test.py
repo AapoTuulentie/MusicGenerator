@@ -54,13 +54,11 @@ class TestGenerator(unittest.TestCase):
         instrument = "Piano"
         testfile_path = "src/Tests/Testfiles/test_output.mid"
 
-        self.generator.create_midi_file(duration_mode, instrument, filename="test_output.mid", dir="src/Tests/Testfiles/")
+        self.generator.create_midi_file(duration_mode, instrument, filename="test_output.mid",
+                                        dir="src/Tests/Testfiles/")
         self.assertTrue(os.path.exists(testfile_path))
 
     def tearDown(self):
         testfile_path = "src/Tests/Testfiles/test_output.mid"
         if os.path.exists(testfile_path):
             os.remove(testfile_path)
-
-
-        
