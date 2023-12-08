@@ -1,5 +1,5 @@
-import mido
 import random
+import mido
 
 class MidiParser:
     """Class that parses the training data.
@@ -15,7 +15,7 @@ class MidiParser:
         self.durations = []
         self.randomized_durations = []
         self.ticks_per_beat = None
-        
+
     def set_file(self, file):
         """Sets the training data file.
         Args:
@@ -45,13 +45,14 @@ class MidiParser:
         return notes
 
     def parse_durations(self):
-        """Parses durations from training data and adds them to self.durations. Also creates self.randomized_durations"""
-        
+        """Parses durations from training data and adds them to self.durations.
+        Also creates self.randomized_durations"""
+
         file = mido.MidiFile(self.filename)
         patterns = []
         beats_per_bar = 4
         combined_durations = 0
-        bar = []
+        single_bar = []
 
         for track in file.tracks:
             for msg in track:
@@ -60,17 +61,17 @@ class MidiParser:
                     if duration < 20 or duration > 2000:
                         continue
                     self.durations.append(duration)
-                    bar.append(duration)
+                    single_bar.append(duration)
                     combined_durations += duration
                     if combined_durations >= self.ticks_per_beat * beats_per_bar:
-                        patterns.append(bar)
-                        bar = []
+                        patterns.append(single_bar)
+                        single_bar = []
                         combined_durations = 0
         random.shuffle(patterns)
         for pattern in patterns:
             for duration in pattern:
                 self.randomized_durations.append(duration)
-    
+
 
 if __name__ == "__main__":
     parser = MidiParser()

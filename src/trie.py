@@ -14,7 +14,7 @@ class Node:
 class Trie:
     """Class that creates a trie data structure consisting of node objects.
     Attributes:
-        root: first node object in trie, not a note but rather it includes all "root" notes as children
+        root: first node object in trie
         degree: length of a sequence
     """
 
@@ -77,7 +77,7 @@ class Trie:
         Returns:
             trie: the whole trie as a list of tuples
         """
-        
+
         if node is None:
             node = self.root
         trie = []
@@ -91,28 +91,3 @@ class Trie:
                 for sub_sequence, counter in sub_sequences:
                     trie.append(([note] + sub_sequence, counter))
         return trie
-
-
-if __name__ == "__main__":
-    trie = Trie()
-    trie.set_degree(1)
-    data = [1, 3, 2, 1, 4, 3, 2, 1, 3, 4, 3, 2, 4]
-    trie.create_trie(data)
-    print(trie.display())
-    print(trie.get_sequences_starting_from_note(1))
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

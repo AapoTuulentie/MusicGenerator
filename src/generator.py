@@ -1,6 +1,6 @@
+import os
 import random
 import mido
-import os
 
 class Generator:
     """Class that generates the new music track.
@@ -65,7 +65,7 @@ class Generator:
         for i in range(degree):
             next_notes = list(current.children.keys())
             counters = [current.children[note].counter for note in next_notes]
-            
+
             total_count = sum(counters)
             probabilities = [count / total_count for count in counters]
 
@@ -74,7 +74,7 @@ class Generator:
             self.track.append(chosen_note)
             current = current.children[chosen_note]
         return initial_sequence
-    
+
     def generate_new_sequence(self, sequence):
         """Generates the rest of the track.
         Args:
@@ -83,7 +83,7 @@ class Generator:
 
         if len(self.track) > 300:
             return self.track
-        
+
         current = self.trie.root
         sequence.pop(0)
 
@@ -94,7 +94,7 @@ class Generator:
 
         next_notes = list(current.children.keys())
         counters = [current.children[note].counter for note in next_notes]
-        
+
         total_count = sum(counters)
         probabilities = [count / total_count for count in counters]
 
@@ -104,7 +104,8 @@ class Generator:
 
         self.generate_new_sequence(sequence)
 
-    def create_midi_file(self, duration_mode, instrument, filename="generatedtrack.mid", dir="src/GeneratedTracks"):
+    def create_midi_file(self, duration_mode, instrument, filename="generatedtrack.mid",
+                        dir="src/GeneratedTracks"):
         """Creates the midi file for generated track.
         Args:
             duration_mode: mode for note durations
@@ -112,7 +113,7 @@ class Generator:
             filename: name for the generated track
             dir: path for the generated track
         """
-        
+
         midi_file = mido.MidiFile(ticks_per_beat=self.parser.ticks_per_beat)
         track = mido.MidiTrack()
         midi_file.tracks.append(track)
@@ -130,21 +131,21 @@ class Generator:
         if duration_mode == "Same duration for every note":
             for note in self.track:
                 on_message = mido.Message('note_on', note=note, velocity=100, time=0)
-                off_message = mido.Message('note_off', note=note, velocity=100, time=150) 
+                off_message = mido.Message('note_off', note=note, velocity=100, time=150)
                 track.append(on_message)
                 track.append(off_message)
 
         if duration_mode == "Same durations as in source MIDI file":
             for note, duration in zip(self.track, self.parser.durations):
                 on_message = mido.Message('note_on', note=note, velocity=100, time=0)
-                off_message = mido.Message('note_off', note=note, velocity=100, time=duration) 
+                off_message = mido.Message('note_off', note=note, velocity=100, time=duration)
                 track.append(on_message)
                 track.append(off_message)
 
         if duration_mode == "Randomized durations based on bars in source MIDI file":
             for note, duration in zip(self.track, self.parser.randomized_durations):
                 on_message = mido.Message('note_on', note=note, velocity=100, time=0)
-                off_message = mido.Message('note_off', note=note, velocity=100, time=duration) 
+                off_message = mido.Message('note_off', note=note, velocity=100, time=duration)
                 track.append(on_message)
                 track.append(off_message)
 
