@@ -62,7 +62,7 @@ class Ui:
         style = ttk.Style()
         style.configure('TCombobox', background='white')
 
-        degree_label = tk.Label(self.generation_frame, text="Select Degree\n(length of a sequence)",
+        degree_label = tk.Label(self.generation_frame, text="Select Sequence Length (n)",
                                 font=("Courier", 12))
         degree_label.pack(pady=10)
 

@@ -1,10 +1,15 @@
 import unittest
 from trie import Trie
+from midi_parser import MidiParser
 
 class TestTrie(unittest.TestCase):
     def setUp(self):
         self.trie = Trie()
+        self.parser = MidiParser()
         self.trie.set_degree(3)
+        testfile = 'src/Tests/Testfiles/bach_(trio)-sonatas_525_(c)harfesoft.mid'
+        self.parser.set_file(testfile)
+        self.testdata = self.parser.parse_notes()
 
     def test_root_has_children(self):
         data = [70, 74, 77, 70, 75, 79, 82, 77]
@@ -38,3 +43,30 @@ class TestTrie(unittest.TestCase):
         seq = self.trie.get_sequences_starting_from_note(1)
         expected = [([1, 2, 3], 2)]
         self.assertEqual(seq, expected)
+
+    def test_with_min_degree(self):
+        self.trie.set_degree(2)
+        self.trie.create_trie(self.testdata)
+        check = True
+        trie = self.trie.display()
+        for seq in trie:
+            if len(seq[0]) == 2:
+                continue
+            else:
+                check = False
+                break
+        self.assertTrue(check)
+
+    def test_with_max_degree(self):
+        self.trie.set_degree(9)
+        self.trie.create_trie(self.testdata)
+        check = True
+        trie = self.trie.display()
+        for seq in trie:
+            if len(seq[0]) == 9:
+                continue
+            else:
+                check = False
+                break
+        self.assertTrue(check)
+        
