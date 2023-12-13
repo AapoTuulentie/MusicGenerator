@@ -1,6 +1,39 @@
 # MusicGenerator
 MusicGenerator is a project for Data Structures and Algorithms-course. It generates music using MIDI training data and a Markov chain.
 
+### How to Get Started
+This project uses Poetry, so it needs to be installed before trying to run this project. 
+
+Install dependencies with
+
+```bash
+poetry install
+```
+
+Run the application with
+
+```bash
+poetry run invoke start
+```
+
+```bash
+poetry run invoke test
+```
+
+Get test coverage with
+
+```bash
+poetry run invoke coverage
+```
+
+Get Pylint score with
+
+```bash
+poetry run invoke pylint
+```
+
+For the full instructions, visit [User Guide](https://github.com/AapoTuulentie/MusicGenerator/blob/main/Documentation/User_guide.md).
+
 ### Documentation
 
 #### [Design Document](https://github.com/AapoTuulentie/MusicGenerator/blob/main/Documentation/Design_document.md)
