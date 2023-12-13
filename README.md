@@ -16,6 +16,8 @@ Run the application with
 poetry run invoke start
 ```
 
+Run tests with
+
 ```bash
 poetry run invoke test
 ```
