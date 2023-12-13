@@ -1,5 +1,10 @@
-## Testing
+# Testing
 Testing uses Bach's Trio Sonata 525 in C-major as a test file.
+
+## About Testing
+In this application, output testing is difficult because you can not test
+
+## Tests & Coverage
 
 Tests for class MidiParser focus on testing 
 
