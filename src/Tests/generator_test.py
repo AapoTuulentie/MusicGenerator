@@ -1,5 +1,6 @@
 import unittest
 import os
+import mido
 from generator import Generator
 from midi_parser import MidiParser
 from trie import Trie
@@ -26,7 +27,7 @@ class TestGenerator(unittest.TestCase):
     def test_generate_new_sequence(self):
         initial_sequence = self.generator.generate_initial_sequence()
         self.generator.generate_new_sequence(initial_sequence.copy())
-        self.assertEqual(len(self.generator.track), 301)
+        self.assertEqual(len(self.generator.track), 501)
 
     def test_sequences_exist_in_training_data(self):
         initial_sequence = self.generator.generate_initial_sequence()
@@ -57,6 +58,32 @@ class TestGenerator(unittest.TestCase):
         self.generator.create_midi_file(duration_mode, instrument, filename="test_output.mid",
                                         dir="src/Tests/Testfiles/")
         self.assertTrue(os.path.exists(testfile_path))
+
+    def test_generated_file_has_correct_instrument_and_durations(self):
+        initial_sequence = self.generator.generate_initial_sequence()
+        self.generator.generate_new_sequence(initial_sequence.copy())
+        testfile_path = "src/Tests/Testfiles/test_output.mid"
+        instrument = "Bird Tweet"
+        duration_mode = "Same duration for every note"
+        self.generator.create_midi_file(duration_mode, instrument, filename="test_output.mid",
+                                        dir="src/Tests/Testfiles/")
+        self.assertTrue(os.path.exists(testfile_path))
+
+        midi_file = mido.MidiFile(testfile_path)
+
+        expected = 123
+        instrument_number = midi_file.tracks[0][0].program
+        self.assertEqual(instrument_number, expected)
+
+        correct = True
+        for track in midi_file.tracks:
+            for msg in track:
+                if msg.type == "note_on":
+                    if msg.time == 0 or 150:
+                        continue
+                    correct = False
+                    break
+        self.assertTrue(correct)
 
     def tearDown(self):
         testfile_path = "src/Tests/Testfiles/test_output.mid"

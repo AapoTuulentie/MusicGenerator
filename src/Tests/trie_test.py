@@ -52,9 +52,8 @@ class TestTrie(unittest.TestCase):
         for seq in trie:
             if len(seq[0]) == 2:
                 continue
-            else:
-                check = False
-                break
+            check = False
+            break
         self.assertTrue(check)
 
     def test_with_max_degree(self):
@@ -65,8 +64,6 @@ class TestTrie(unittest.TestCase):
         for seq in trie:
             if len(seq[0]) == 9:
                 continue
-            else:
-                check = False
-                break
+            check = False
+            break
         self.assertTrue(check)
-        

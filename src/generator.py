@@ -81,7 +81,7 @@ class Generator:
             sequence: the sequence to base the next note on
         """
 
-        if len(self.track) > 300:
+        if len(self.track) > 500:
             return self.track
 
         current = self.trie.root
