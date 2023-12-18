@@ -21,12 +21,21 @@ Test for Generator class test that forming the new track works correctly. This i
 - The generated track has the correct instrument and durations
 
 ## Quality of the Music
-The most unique melodies are generated with the "Randomized durations" mode, where durations are randomized by bars. It can be quite random at times with the durations going from slow to fast suddenly. When the sequence length is around 5 or above, the resemblance starts to be noticeable with the source MIDI.
+The most unique melodies are generated with the "Randomized durations" mode, where durations are randomized by bars. It can be quite random at times with the durations going from slow to fast suddenly, but overall they are alright. The tick rate is always the same as in source MIDI, so some tracks are faster than others, for example the Bach's Trio Sonata. When the sequence length is around 6 or above, the resemblance starts to be noticeable with the source MIDI.
 
 I noticed that best sounding unique generated tracks are generated with sequence length 3 or 4 and randomized durations. Still, I would not call these musical pieces particuralry "good" sounding but they seem to be in the right key and at times they produce short snippets of a good melody.
 
+## Coverage
+
+Test coverage:
+
+![image](https://github.com/AapoTuulentie/MusicGenerator/assets/101823904/32bd0119-75d3-4977-8683-d8be09400784)
+
+Coverage is a bit lower for the class Generator because it holds a main type function generate, which is not directly tested. 
+
+## Pylint
+
+![image](https://github.com/AapoTuulentie/MusicGenerator/assets/101823904/46327373-8dd6-4ad2-b2fa-fedc739e10f5)
 
 
-Current coverage:
 
-![image](https://github.com/AapoTuulentie/MusicGenerator/assets/101823904/5cefadf6-9405-4302-b5f6-9b6275b61a4c)
