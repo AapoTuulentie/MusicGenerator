@@ -79,7 +79,7 @@ class TestGenerator(unittest.TestCase):
         for track in midi_file.tracks:
             for msg in track:
                 if msg.type == "note_on":
-                    if msg.time == 0 or 150:
+                    if msg.time == 0 or msg.time == 150:
                         continue
                     correct = False
                     break
